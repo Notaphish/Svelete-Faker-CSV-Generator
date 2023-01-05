@@ -1,4 +1,4 @@
 <script>
-    import 'bootstrap/dist/css/bootstrap.min.css';
+    import 'bootswatch/dist/litera/bootstrap.min.css'
 </script>
 <slot />
