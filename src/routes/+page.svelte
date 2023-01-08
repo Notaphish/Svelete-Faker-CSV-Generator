@@ -6,6 +6,6 @@
 <div class="container">
     <CsvGenerate />
     <div class="row mt-1">
-        <button type="button" class="btn btn-primary">testing</button>
+        <button type="button" class="btn btn-primary">Generate CSV</button>
     </div>
 </div>
