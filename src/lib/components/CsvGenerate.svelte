@@ -32,7 +32,7 @@
 					<label for="column{i}Name" class="form-label">Column Name</label>
 					<input type="string" bind:value={field.name} class="form-control form-control-sm" id="column{i}Name" />
 				</div>
-				<div class="col">
+				<div class="col-9">
 					<CsvGenerateData columnIndex={i} dataFieldType={field.type}/>
 				</div>
 			</div>
