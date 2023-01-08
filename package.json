@@ -51,6 +51,7 @@
 	},
 	"type": "module",
 	"dependencies": {
+		"@faker-js/faker": "^7.6.0",
 		"bootstrap": "^5.2.3",
 		"bootswatch": "^5.2.3"
 	}
