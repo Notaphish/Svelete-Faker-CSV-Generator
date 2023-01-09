@@ -17,30 +17,20 @@
 	];
 </script>
 
+<label for="column{columnIndex}fixedCheck" class="form-check-label">Column Content</label>
+<div class="input-group">
+    <div class="input-group-text">
+        <input value="test" id="column{columnIndex}fixedCheck" class="form-check-input mt-0" type="checkbox" bind:checked={useStaticValue}>
+      </div>
 
-<div class="row">
-    <div class="col">
-        <label for="column{columnIndex}fixedCheck" class="form-check-label">Fixed Value?</label>
-        <input
-            type="checkbox"
-            class="form-check form-check-sm"
-            id="column{columnIndex}fixedCheck"
-            bind:checked={useStaticValue}
-        />
-        
-    </div>
-
-    <div class="col-8">
-        {#if useStaticValue}
-            <label for="column{columnIndex}Type" class="form-label">Column Value</label>
-            <input type={dataFieldType} class="form-control form-control-sm" id="column{columnIndex}Type" />
-        {:else}
-            <label for="column{columnIndex}fakerType" class="form-label">Fake Value Type</label>
-            <select class="form-select">
-                {#each options as fakerOption}
-                    <option value={fakerOption}>{fakerOption.text}</option>
-                {/each}
-            </select>
-        {/if}
-    </div>
+	{#if useStaticValue}
+		<input type={dataFieldType} class="form-control" id="column{columnIndex}Type" placeholder="Fixed column text" />
+	{:else}
+		<select class="form-select">
+            <option selected>Select fake data type...</option>
+			{#each options as fakerOption}
+				<option value={fakerOption}>{fakerOption.text}</option>
+			{/each}
+		</select>
+	{/if}
 </div>
