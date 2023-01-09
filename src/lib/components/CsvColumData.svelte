@@ -1,6 +1,8 @@
 <script lang="ts">
 	export let columnIndex: number;
 	export let dataFieldType: string;
+	export let columnValue: undefined | string;
+	export let columnValueFunction: undefined | (() => string);
 
 	import { faker } from '@faker-js/faker';
 	interface SelectOption {
@@ -15,6 +17,7 @@
 		{ id: 1, text: 'Email address', generateFunction: faker.internet.email },
 		{ id: 2, text: 'First Name', generateFunction: faker.name.firstName }
 	];
+
 </script>
 
 <label for="column{columnIndex}fixedCheck" class="form-check-label">Column Content</label>
@@ -24,12 +27,12 @@
       </div>
 
 	{#if useStaticValue}
-		<input type={dataFieldType} class="form-control" id="column{columnIndex}Type" placeholder="Fixed column text" />
+		<input type="text" class="form-control" id="column{columnIndex}Type" placeholder="Fixed column text" />
 	{:else}
-		<select class="form-select">
+		<select bind:value={columnValueFunction} class="form-select">
             <option selected>Select fake data type...</option>
 			{#each options as fakerOption}
-				<option value={fakerOption}>{fakerOption.text}</option>
+				<option value={fakerOption.generateFunction}>{fakerOption.text}</option>
 			{/each}
 		</select>
 	{/if}
