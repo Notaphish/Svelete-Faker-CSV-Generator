@@ -2,23 +2,24 @@
 	import { faker } from '@faker-js/faker';
 	import CsvColumData from './CsvColumData.svelte';
 
+	let latestId = 1;
+
 	interface FieldDeets {
 		id: number;
 		name: string;
-		value?: string;
-		valueFunction?: () => string;
+		fixedOptionValue?: string;
+		optionId?: string;
 		type: string;
 	}
-	let latestId = 1;
-
-	let fields: FieldDeets[] = [{ id: 1, name: '', value: "", type: '', valueFunction: undefined }];
+	let fields: FieldDeets[] = [{ id: latestId, name: '', type: '' }];
 
 	function addNewField() {
-		fields = [...fields, { id: ++latestId, name: '', type: '', value: "", valueFunction: undefined }];
+		fields = [...fields, { id: ++latestId, name: '', type: '' }];
 	}
 
 	function removeLast() {
 		fields.pop();
+		latestId--
 		fields = fields;
 	}
 
@@ -40,10 +41,10 @@
 				</div>
 				<div class="col-9">
 					<CsvColumData
+						bind:columnValue={field.fixedOptionValue}
+						bind:columnOptionId={field.optionId}
 						columnIndex={i}
 						dataFieldType={field.type}
-						columnValue={field.value}
-						columnValueFunction={field.valueFunction}
 					/>
 				</div>
 			</div>
@@ -58,5 +59,7 @@
 </div>
 
 <div class="row mt-1">
-	<button on:click={() => console.log(JSON.stringify(fields))} class="btn btn-primary">Generate CSV</button>
+	<button on:click={() => console.log(JSON.stringify(fields))} class="btn btn-primary"
+		>Generate CSV</button
+	>
 </div>
