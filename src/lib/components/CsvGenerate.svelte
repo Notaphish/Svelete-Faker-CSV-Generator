@@ -6,15 +6,15 @@
 
 	interface FieldDeets {
 		id: number;
-		name: string;
+		columnName: string;
 		fixedOptionValue?: string;
 		optionId?: string;
 		type: string;
 	}
-	let fields: FieldDeets[] = [{ id: latestId, name: '', type: '' }];
+	let fields: FieldDeets[] = [{ id: latestId, columnName: '', type: '' }];
 
 	function addNewField() {
-		fields = [...fields, { id: ++latestId, name: '', type: '' }];
+		fields = [...fields, { id: ++latestId, columnName: '', type: '' }];
 	}
 
 	function removeLast() {
@@ -34,7 +34,7 @@
 					<label for="column{i}Name" class="form-label">Column Name</label>
 					<input
 						type="string"
-						bind:value={field.name}
+						bind:value={field.columnName}
 						class="form-control form-control-sm"
 						id="column{i}Name"
 					/>

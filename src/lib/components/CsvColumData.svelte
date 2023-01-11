@@ -48,7 +48,7 @@
 		/>
 	{:else}
 		<select bind:value={columnOptionId} class="form-select">
-			<option selected>Select fake data type...</option>
+			<option value=-1 selected>Select fake data type...</option>
 			{#each displayableOptions as fakerOption}
 				<option value={fakerOption.id}>{fakerOption.text}</option>
 			{/each}
