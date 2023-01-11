@@ -1,17 +1,12 @@
 <script lang="ts">
 	import { faker } from '@faker-js/faker';
 	import CsvColumData from './CsvColumData.svelte';
+	import type { ColumnDetails } from '$lib/scripts/types';
 
 	let latestId = 1;
 
-	interface FieldDeets {
-		id: number;
-		columnName: string;
-		fixedOptionValue?: string;
-		optionId?: string;
-		type: string;
-	}
-	let fields: FieldDeets[] = [{ id: latestId, columnName: '', type: '' }];
+	
+	let fields: ColumnDetails[] = [{ id: latestId, columnName: '', type: '' }];
 
 	function addNewField() {
 		fields = [...fields, { id: ++latestId, columnName: '', type: '' }];
