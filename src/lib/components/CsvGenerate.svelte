@@ -1,11 +1,9 @@
 <script lang="ts">
-	import { faker } from '@faker-js/faker';
 	import CsvColumData from './CsvColumData.svelte';
 	import type { ColumnDetails } from '$lib/scripts/types';
 
 	let latestId = 1;
 
-	
 	let fields: ColumnDetails[] = [{ id: latestId, columnName: '', type: '' }];
 
 	function addNewField() {
@@ -14,11 +12,38 @@
 
 	function removeLast() {
 		fields.pop();
-		latestId--
+		latestId--;
 		fields = fields;
 	}
 
-	$: console.log(JSON.stringify(fields));
+	async function generateCSV() {
+		if (fields.length === 1 && !fields[0].columnName && !fields[0].fixedOptionValue) {
+			return;
+		}
+
+		const response = await fetch('/csv', {
+			method: 'POST',
+			body: JSON.stringify({ fields }),
+			headers: {
+				'content-type': 'application/json'
+			}
+		});
+
+		triggerCsvDownload(await response.blob());
+	}
+
+	function triggerCsvDownload(csvBlob: Blob) {
+		const url = window.URL || window.webkitURL;
+		const link = url.createObjectURL(csvBlob);
+
+		// generate anchor tag, click it for download and then remove it again
+		const a = document.createElement('a');
+		a.setAttribute('download', `data.csv`);
+		a.setAttribute('href', link);
+		document.body.appendChild(a);
+		a.click();
+		document.body.removeChild(a);
+	}
 </script>
 
 <form>
@@ -45,16 +70,15 @@
 			</div>
 		{/each}
 	</div>
-</form>
-<div class="container mt-1">
-	<div class="btn-group" role="group">
-		<button class="btn btn-success" on:click={addNewField}>Add new entry</button>
-		<button class="btn btn-danger" on:click={removeLast}>Remove last</button>
-	</div>
-</div>
 
-<div class="row mt-1">
-	<button on:click={() => console.log(JSON.stringify(fields))} class="btn btn-primary"
-		>Generate CSV</button
-	>
-</div>
+	<div class="container mt-1">
+		<div class="btn-group" role="group">
+			<button class="btn btn-success" on:click={addNewField}>Add new entry</button>
+			<button class="btn btn-danger" on:click={removeLast}>Remove last</button>
+		</div>
+	</div>
+
+	<div class="row mt-1">
+		<button on:click={generateCSV} class="btn btn-primary">Generate and Download CSV</button>
+	</div>
+</form>
