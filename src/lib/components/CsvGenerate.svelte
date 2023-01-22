@@ -5,6 +5,7 @@
 	let latestId = 1;
 
 	let fields: ColumnDetails[] = [{ id: latestId, columnName: '', type: '' }];
+	let rowsToGenerate: number = 5;
 
 	function addNewField() {
 		fields = [...fields, { id: ++latestId, columnName: '', type: '' }];
@@ -23,7 +24,7 @@
 
 		const response = await fetch('/csv', {
 			method: 'POST',
-			body: JSON.stringify({ fields }),
+			body: JSON.stringify({ fields, rowsToGenerate }),
 			headers: {
 				'content-type': 'application/json'
 			}
@@ -48,6 +49,17 @@
 
 <form>
 	<div class="container">
+		<div class="row">
+			<div class="col-3">
+				<label for="rowsToGenerate" class="form-label">Rows to generate?</label>
+				<input
+					type="string"
+					bind:value={rowsToGenerate}
+					class="form-control form-control-sm"
+					id="rowsToGenerate"
+				/>
+			</div>
+		</div>
 		{#each fields as field, i}
 			<div class="row">
 				<div class="col">

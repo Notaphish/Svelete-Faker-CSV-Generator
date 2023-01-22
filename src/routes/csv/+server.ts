@@ -5,8 +5,8 @@ import { Parser } from '@json2csv/plainjs';
 export async function POST({ request }) {
   const parser = new Parser({ withBOM: true });
 
-	const { fields } = await request.json();
-	const rowColumns = generateCSV(5, fields);
+	const { fields, rowsToGenerate } = await request.json();
+	const rowColumns = generateCSV(rowsToGenerate, fields);
 	const response = new Response();
 	return new Response(parser.parse(rowColumns), {
 		headers: {
